@@ -1,0 +1,74 @@
+<% include ./partials/header %>
+
+
+<style type="text/css">
+	body{
+		background-image: url("https://images.unsplash.com/photo-1488509082528-cefbba5ad692?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=37acaf9df2e8d6a5d8c6bdc5ba542266&auto=format&fit=crop&w=1050&q=80");
+		background-size: 100%;
+	}
+
+	#jumbotron{
+			margin:100px auto;
+			opacity: 0.3;
+			font-weight: bold;
+	}
+
+	#button{
+		margin:0px auto;
+		display:block; 
+		width: 250px;
+	}
+	.center{
+		text-align: center;
+
+	}
+
+
+</style>
+
+<div class="container">
+
+	<div class="jumbotron border border-secondary rounded" id="jumbotron">
+	  <h1 class="display-4 text-center">My Basic Chat Application</h1>
+	  <p class="lead">Welcome to iSctProChat-A dynamic chat interface with hands on experience of an everlasting community and enriching experience. </p>
+	  <hr class="my-4">
+	  <p class="mb-5"> So we had to find a solution to break the ice between mentors and students. A local chat application came handy in this situation. People love to be anonymous, which gives them more power to express themselves and ask anytime anywhere. This is the same mantra used by most of the popular forums on the internet, such as Reddit and 4chan. These are just a few giant examples of semi-anonymous apps.
+
+	  </p>
+	  	<%if(currentUser){%>
+	  			<div class="center"><a href="/profile/<%=currentUser._id%>">My Profile</a></div>
+	  	<%}%>
+
+	 
+	</div>
+
+</div>
+	
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<% include ./partials/footer %>
+
+

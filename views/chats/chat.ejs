@@ -1,0 +1,116 @@
+<% include ../partials/header %>
+	
+	
+	<style type="text/css">
+		#chat{
+			height: 500px;
+			text-align: center;
+			margin-top: 2px;
+			overflow-x: hidden;
+			overflow-y: scroll; 
+		}
+
+		
+
+		form{
+			margin:0 auto;width:50%;
+		}
+
+		#message{
+			margin-top: 4px;
+			width:100%;
+		}
+
+		.center{
+			text-align: center;
+			
+		}
+
+
+	</style>
+
+
+
+	
+
+	<h1 class="text-center">Welcome To this Chat Application</h1>
+	<div id="chat" class="Chat"> </div>
+	
+
+
+		<div class="container">
+
+			<form id="send-message" class="form-inline">
+				
+				
+				
+
+				
+				<input type="text" name="enterMessage" class="form-control mr-2 mb-2" id="message" placeholder="Enter your message">
+			
+				<input type="submit" class="btn btn-secondary mx-auto mb-2" id="submit">
+				
+			</form>
+			
+			<div class="center"><a href="/profile/<%=chatUser._id%>">Back</a></div>
+
+		</div>
+
+
+
+
+
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+	<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+
+	
+
+	<script>
+		
+		jQuery(function($){
+			
+			
+			var socket = io.connect();
+
+			var $messageForm = $("#send-message");
+			
+			var $messageBox  = $("#message");
+			var $chat 		 = $("#chat");
+
+
+			
+
+			
+
+			//send our message to the server using jquery.
+			$messageForm.submit(function(myEvent){
+				myEvent.preventDefault();
+
+		
+
+				//Send to server.
+			
+				socket.emit("sendMessage",{message:$messageBox.val(),username:"<%=chatUser.username%>"});
+
+				
+				$messageBox.val("");
+			});
+
+
+			socket.on("newMessage",function(data){
+
+				$chat.append("<strong>" + data.username +"</strong>"+ ": - " +data.message+"<br/>");
+				$chat.stop ().animate ({
+ 				 scrollTop: $chat[0].scrollHeight
+				});
+				
+			});
+		});
+
+
+	</script>
+
+<% include ../partials/footer %>
+
+

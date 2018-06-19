@@ -1,0 +1,68 @@
+<% include ../partials/header %>
+
+<style type="text/css">
+	
+	
+
+
+</style>
+
+
+<div class="container">
+
+	<div class="row">
+
+		<div class="col-md-3">
+			<a href="/chat/<%=currentUser._id%>" id="chat" class="text-center">Global Chat</a>
+
+			<h5 class="mt-5">Online Users</h1>
+
+			<div  id="users">
+				
+				<% activeUsers.forEach(function(user){ %>
+								
+						<div>
+							<a href="#"> <%=user.username%> </a>
+						</div>
+
+			
+				<%})%>
+			</div>
+
+		</div>
+
+		
+	</div>
+
+</div>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+
+<script type="text/javascript">
+
+	jQuery(function($){
+		var socket = io.connect();
+
+
+
+
+
+	});
+
+
+
+
+
+
+</script>
+
+
+
+
+
+
+
+
+
+<% include ../partials/footer %>
