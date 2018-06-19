@@ -41,10 +41,6 @@ var express = require("express"),
 
 
 
-
-
-
-
 //Connect a database
 var url = process.env.DATABASEURL || "mongodb://localhost/chatApplication";
 mongoose.connect(url);
@@ -81,15 +77,6 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-
-//Using passport session for socket.io
-io.use(passportSocketIo.authorize({
-	  key: 'connect.sid',
-	  
-	 
-	  passport: passport,
-	  cookieParser: cookieParser
-	}));
 
 
 
