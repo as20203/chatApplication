@@ -42,7 +42,7 @@ var express = require("express"),
 
 
 //Connect a database
-var url = process.env.DATABASEURL || "mongodb://localhost/chatApplication";
+var url = process.env.DATABASEURL || "mongodb://localhost:27017/UserAccount";
 mongoose.connect(url);
 
 
@@ -59,14 +59,24 @@ app.use(bodyParser.json());
 
 //Passport Authentication(Keep at end)
 
+const expressSession = require("express-session");
+const MongoStore = require('connect-mongo')(expressSession);
+const sessionStore = new MongoStore({ url: 'mongodb://localhost:27017/UserAccount' });
 	//creating a session.
-app.use(require("express-session")({
-	
-	secret:"My chat",
-	resave: false,
-	saveUninitialized: false,
-	
-  
+app.use(expressSession({
+    	key: 'express.sid',
+        secret: "This is my secret",
+        resave: false,
+        saveUninitialized: false,
+        store: sessionStore
+    }));
+
+io.use(passportSocketIo.authorize({
+  key: 'connect.sid',
+  secret: "This is my secret",
+  store: sessionStore,
+  passport: passport,
+  cookieParser: cookieParser
 }));
 
 
