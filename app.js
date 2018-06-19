@@ -22,9 +22,9 @@ var express = require("express"),
 
 	//require all models
 
-	server = require("http").createServer(app);
+	server = require("http").Server(app);
 
-    io = require("socket.io").listen(server);
+    io = require("socket.io")(server);
 
 	User = require("./models/user");
 
@@ -71,12 +71,21 @@ app.use(expressSession({
         store: sessionStore
     }));
 
+
+function onAuthorizeSuccess(data, accept){
+  console.log('successful connection to socket.io');
+ 
+  // The accept-callback still allows us to decide whether to
+  // accept the connection or not.
+  accept(null, true);}
+
 io.use(passportSocketIo.authorize({
-  key: 'connect.sid',
+  key: 'express.sid',
   secret: "This is my secret",
   store: sessionStore,
   passport: passport,
-  cookieParser: cookieParser
+  cookieParser: cookieParser,
+  success: onAuthorizeSuccess
 }));
 
 
@@ -105,15 +114,20 @@ app.use(function(req,res,next){
 
 //When The Conection is established and active.
 
-io.sockets.on("connection",function(userSocket){
+io.on("connection",function(userSocket){
+	console.log("connected");
 	console.log(userSocket.id);
 	
 	userSocket.on("sendMessage",function(data){
 
 		//broadcasting message to users.
-
+		console.log("broadcasting");
 		io.sockets.emit("newMessage",data);
 	});
+
+	userSocket.on('disconnect', function() {
+        console.log('Client disconnected.');
+    });
 });
 
 
